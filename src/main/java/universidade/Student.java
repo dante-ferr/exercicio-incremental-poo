@@ -11,6 +11,7 @@ public class Student {
     private int age;
     private String personalDescription;
     private List<Contract> contracts;
+    private List<PropertyInterest> interests;
 
     public Student(User user, String enrollmentNumber, String enrollmentProof, String university,
             int age, String personalDescription) {
@@ -21,6 +22,7 @@ public class Student {
         this.age = age;
         this.personalDescription = personalDescription;
         this.contracts = new ArrayList<>();
+        this.interests = new ArrayList<>();
     }
 
     public void sendMessage(Chat chat, String messageContent) {
@@ -43,7 +45,13 @@ public class Student {
     }
 
     public void expressInterest(Property property) {
-        property.addInterestedStudent(this);
+        PropertyInterest interest = new PropertyInterest(this, property, java.time.LocalDate.now());
+        this.interests.add(interest);
+        property.addInterest(interest);
+    }
+
+    public List<PropertyInterest> getInterests() {
+        return interests;
     }
 
     public Chat openChat(Owner owner, Property property) {

@@ -24,10 +24,10 @@ public class Owner {
         return propertyDocuments != null && !propertyDocuments.isEmpty();
     }
 
-    public Property createPropertyListing(String detailedLocation, List<String> photos,
+    public Property createPropertyListing(String id, String detailedLocation, List<String> photos,
             String description, String accommodationType, double maxDailyCharge,
             double condominiumFee, double iptuFee, char category, int amountOfBedrooms) {
-        return new Property(this, detailedLocation, photos, description, accommodationType,
+        return new Property(id, this, detailedLocation, photos, description, accommodationType,
                 maxDailyCharge, condominiumFee, iptuFee, category, amountOfBedrooms);
     }
 

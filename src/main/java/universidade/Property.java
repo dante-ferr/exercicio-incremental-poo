@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Property {
+    private String id;
     private Owner owner;
     private String detailedLocation;
     private List<String> photos;
     private String fullDescription;
     private String accommodationType;
-    private List<Student> interestedStudents;
+    private List<PropertyInterest> interests;
     private List<Review> reviews;
 
     // Pricing attributes
@@ -27,15 +28,16 @@ public class Property {
 
     public static final Map<Integer, Double> FQTOS = Map.of(1, 1.0, 2, 1.5, 3, 2.0, 4, 2.5, 5, 3.0);
 
-    public Property(Owner owner, String detailedLocation, List<String> photos,
+    public Property(String id, Owner owner, String detailedLocation, List<String> photos,
             String fullDescription, String accommodationType, double maxDailyCharge,
             double condominiumFee, double iptuFee, char category, int amountOfBedrooms) {
+        this.id = id;
         this.owner = owner;
         this.detailedLocation = detailedLocation;
         this.photos = new ArrayList<>(photos != null ? photos : new ArrayList<>());
         this.fullDescription = fullDescription;
         this.accommodationType = accommodationType;
-        this.interestedStudents = new ArrayList<>();
+        this.interests = new ArrayList<>();
         this.reviews = new ArrayList<>();
         
         this.maxDailyCharge = maxDailyCharge;
@@ -50,9 +52,9 @@ public class Property {
         this.photos.add(photoUrl);
     }
 
-    public void addInterestedStudent(Student student) {
-        if (!this.interestedStudents.contains(student)) {
-            this.interestedStudents.add(student);
+    public void addInterest(PropertyInterest interest) {
+        if (!this.interests.contains(interest)) {
+            this.interests.add(interest);
         }
     }
 
@@ -63,9 +65,11 @@ public class Property {
     }
 
     // Getters and Setters
+    public String getId() { return id; }
     public Owner getOwner() { return owner; }
     public String getDetailedLocation() { return detailedLocation; }
-    public List<Student> getInterestedStudents() { return interestedStudents; }
+    public String getAccommodationType() { return accommodationType; }
+    public List<PropertyInterest> getInterests() { return interests; }
     public List<Review> getReviews() { return reviews; }
     public double getMaxDailyCharge() { return maxDailyCharge; }
     public double getCondominiumFee() { return condominiumFee; }
