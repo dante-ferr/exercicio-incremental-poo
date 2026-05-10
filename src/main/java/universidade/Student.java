@@ -40,7 +40,6 @@ public class Student {
 
     public List<Property> searchProperties(String location, String accommodationType,
             double minRating) {
-        // Mock search logic
         return new ArrayList<>();
     }
 

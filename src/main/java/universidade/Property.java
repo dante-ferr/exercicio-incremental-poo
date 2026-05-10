@@ -14,7 +14,6 @@ public class Property {
     private List<PropertyInterest> interests;
     private List<Review> reviews;
 
-    // Pricing attributes
     private double maxDailyCharge;
     private double condominiumFee;
     private double iptuFee;
@@ -64,20 +63,57 @@ public class Property {
         return reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
     }
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public Owner getOwner() { return owner; }
-    public String getDetailedLocation() { return detailedLocation; }
-    public String getAccommodationType() { return accommodationType; }
-    public List<PropertyInterest> getInterests() { return interests; }
-    public List<Review> getReviews() { return reviews; }
-    public double getMaxDailyCharge() { return maxDailyCharge; }
-    public double getCondominiumFee() { return condominiumFee; }
-    public double getIptuFee() { return iptuFee; }
-    public char getCategory() { return category; }
-    public int getAmountOfBedrooms() { return amountOfBedrooms; }
-    public PropertyStatus getStatus() { return status; }
-    public void setStatus(PropertyStatus status) { this.status = status; }
+    public String getId() {
+        return id;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public String getDetailedLocation() {
+        return detailedLocation;
+    }
+
+    public String getAccommodationType() {
+        return accommodationType;
+    }
+
+    public List<PropertyInterest> getInterests() {
+        return interests;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public double getMaxDailyCharge() {
+        return maxDailyCharge;
+    }
+
+    public double getCondominiumFee() {
+        return condominiumFee;
+    }
+
+    public double getIptuFee() {
+        return iptuFee;
+    }
+
+    public char getCategory() {
+        return category;
+    }
+
+    public int getAmountOfBedrooms() {
+        return amountOfBedrooms;
+    }
+
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PropertyStatus status) {
+        this.status = status;
+    }
 
     public double getFcat() {
         return FCATS.getOrDefault(category, 1.0);

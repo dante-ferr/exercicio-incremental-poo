@@ -39,7 +39,3 @@ Caso não possua o Make instalado, você pode compilar e executar manualmente:
     ```bash
     java -cp bin universidade.Main
     ```
-
-## Observações
-
-- A fim de facilitar a validação do código, utilizei IA para gerar um código de teste em src/test/java/universidade/Main.java.
