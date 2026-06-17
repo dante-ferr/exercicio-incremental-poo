@@ -3,8 +3,7 @@ package universidade;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
-    private User user;
+public class Student extends User {
     private String enrollmentNumber;
     private String enrollmentProof;
     private String university;
@@ -13,9 +12,10 @@ public class Student {
     private List<Contract> contracts;
     private List<PropertyInterest> interests;
 
-    public Student(User user, String enrollmentNumber, String enrollmentProof, String university,
+    public Student(String fullName, String cpf, java.time.LocalDate birthDate, String phoneNumber, String email,
+            String password, String enrollmentNumber, String enrollmentProof, String university,
             int age, String personalDescription) {
-        this.user = user;
+        super(fullName, cpf, birthDate, phoneNumber, email, password);
         this.enrollmentNumber = enrollmentNumber;
         this.enrollmentProof = enrollmentProof;
         this.university = university;
@@ -25,12 +25,13 @@ public class Student {
         this.interests = new ArrayList<>();
     }
 
-    public void sendMessage(Chat chat, String messageContent) {
-        user.sendMessage(chat, messageContent);
+    public User getUser() {
+        return this;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public boolean validateIdentity() {
+        return validateAccountCreation();
     }
 
     public boolean validateAccountCreation() {

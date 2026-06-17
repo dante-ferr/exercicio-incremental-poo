@@ -20,11 +20,11 @@ public class FlatMateUniApp {
     public void start() {
         boolean exit = false;
         while (!exit) {
-            System.out.println("\n=== FlatMateUni.com.br - Menu Principal ===");
-            System.out.println("1. Cadastrar Proprietário");
-            System.out.println("2. Cadastrar Imóvel");
-            System.out.println("3. Listar Proprietários");
-            System.out.println("4. Listar Imóveis");
+            System.out.println("\n-- Menu Principal FlatMateUni --");
+            System.out.println("1. Cadastrar proprietário");
+            System.out.println("2. Cadastrar imóvel");
+            System.out.println("3. Listar proprietários");
+            System.out.println("4. Listar imóveis");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -52,103 +52,117 @@ public class FlatMateUniApp {
     }
 
     private void registerOwner() {
-        System.out.println("\n--- Cadastro de Proprietário ---");
-        try {
-            System.out.print("Nome Completo: ");
-            String name = scanner.nextLine();
-            if (name.isEmpty()) throw new IllegalArgumentException("Nome é obrigatório.");
-
-            System.out.print("CPF: ");
-            String cpf = scanner.nextLine();
-            if (cpf.isEmpty()) throw new IllegalArgumentException("CPF é obrigatório.");
-
-            System.out.print("Data de Nascimento (dd/mm/aaaa): ");
-            String dateStr = scanner.nextLine();
-            LocalDate birthDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-            System.out.print("Telefone: ");
-            String phone = scanner.nextLine();
-
-            System.out.print("Email: ");
-            String email = scanner.nextLine();
-
-            System.out.print("Senha: ");
-            String password = scanner.nextLine();
-
-            User user = new User(name, cpf, birthDate, phone, email, password);
-            
-            System.out.println("Documentos do imóvel (separe por vírgula): ");
-            String docsStr = scanner.nextLine();
-            List<String> docs = List.of(docsStr.split(","));
-
-            Owner owner = new Owner(user, docs);
-            if (!owner.validateIdentity()) {
-                throw new IllegalArgumentException("Proprietário deve fornecer documentos.");
-            }
-
-            owners.add(owner);
-            System.out.println("Proprietário cadastrado com sucesso!");
-        } catch (Exception e) {
-            System.out.println("Erro ao cadastrar proprietário: " + e.getMessage());
-        }
-    }
-
-    private void registerProperty() {
-        System.out.println("\n--- Cadastro de Imóvel ---");
-        if (owners.isEmpty()) {
-            System.out.println("Erro: Nenhum proprietário cadastrado. Cadastre um proprietário primeiro.");
+        System.out.println("\n-- Cadastro de Proprietário --");
+        System.out.print("Nome: ");
+        String name = scanner.nextLine();
+        if (name.isEmpty()) {
+            System.out.println("Erro: O nome é obrigatório.");
             return;
         }
 
-        try {
-            System.out.println("Selecione o proprietário pelo CPF:");
-            listOwners();
-            System.out.print("CPF do Proprietário: ");
-            String cpf = scanner.nextLine();
-            
-            Owner selectedOwner = owners.stream()
-                .filter(o -> o.getUser().getCpf().equals(cpf))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Proprietário não encontrado."));
-
-            System.out.print("ID do Imóvel (ex: PROP001): ");
-            String id = scanner.nextLine();
-            if (id.isEmpty()) throw new IllegalArgumentException("ID é obrigatório.");
-
-            System.out.print("Localização Detalhada: ");
-            String location = scanner.nextLine();
-
-            System.out.print("Tipo de Acomodação (ex: Apartamento, Quarto): ");
-            String type = scanner.nextLine();
-
-            System.out.print("Descrição Completa: ");
-            String desc = scanner.nextLine();
-
-            System.out.print("Valor Máximo Diária: ");
-            double daily = Double.parseDouble(scanner.nextLine());
-
-            System.out.print("Valor Condomínio: ");
-            double cond = Double.parseDouble(scanner.nextLine());
-
-            System.out.print("Valor IPTU: ");
-            double iptu = Double.parseDouble(scanner.nextLine());
-
-            System.out.print("Categoria (A-G): ");
-            char cat = scanner.nextLine().toUpperCase().charAt(0);
-            if (!Property.FCATS.containsKey(cat)) throw new IllegalArgumentException("Categoria inválida.");
-
-            System.out.print("Quantidade de Quartos: ");
-            int bedrooms = Integer.parseInt(scanner.nextLine());
-
-            Property property = selectedOwner.createPropertyListing(id, location, new ArrayList<>(), 
-                desc, type, daily, cond, iptu, cat, bedrooms);
-
-            properties.add(property);
-            System.out.println("Imóvel cadastrado com sucesso e vinculado a " + selectedOwner.getUser().getFullName());
-
-        } catch (Exception e) {
-            System.out.println("Erro ao cadastrar imóvel: " + e.getMessage());
+        System.out.print("CPF: ");
+        String cpf = scanner.nextLine();
+        if (cpf.isEmpty()) {
+            System.out.println("Erro: O CPF é obrigatório.");
+            return;
         }
+
+        System.out.print("Data de nascimento (dd/mm/aaaa): ");
+        String dateStr = scanner.nextLine();
+        LocalDate birthDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        System.out.print("Telefone: ");
+        String phone = scanner.nextLine();
+
+        System.out.print("E-mail: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Senha: ");
+        String password = scanner.nextLine();
+
+        System.out.println("Documentos do imóvel (separados por vírgula): ");
+        String docsStr = scanner.nextLine();
+        List<String> docs = List.of(docsStr.split(","));
+
+        Owner owner = new Owner(name, cpf, birthDate, phone, email, password, docs);
+        if (!owner.validateIdentity()) {
+            System.out.println("Erro: É obrigatório fornecer documentos.");
+            return;
+        }
+
+        owners.add(owner);
+        System.out.println("Proprietário cadastrado!");
+    }
+
+    private void registerProperty() {
+        System.out.println("\n-- Cadastro de Imóvel --");
+        if (owners.isEmpty()) {
+            System.out.println("Erro: Cadastre um proprietário antes.");
+            return;
+        }
+
+        System.out.println("Selecione o proprietário pelo CPF:");
+        listOwners();
+        System.out.print("CPF do proprietário: ");
+        String cpf = scanner.nextLine();
+        
+        Owner selectedOwner = null;
+        for (Owner o : owners) {
+            if (o.getCpf().equals(cpf)) {
+                selectedOwner = o;
+                break;
+            }
+        }
+        if (selectedOwner == null) {
+            System.out.println("Erro: Proprietário não encontrado.");
+            return;
+        }
+
+        System.out.print("Código do imóvel (ex: PROP001): ");
+        String id = scanner.nextLine();
+        if (id.isEmpty()) {
+            System.out.println("Erro: O código é obrigatório.");
+            return;
+        }
+
+        System.out.print("Endereço completo: ");
+        String location = scanner.nextLine();
+
+        System.out.print("Tipo de acomodação (ex: Quarto, Apartamento): ");
+        String type = scanner.nextLine();
+
+        System.out.print("Descrição do imóvel: ");
+        String desc = scanner.nextLine();
+
+        System.out.print("Valor da diária base: ");
+        double daily = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Valor do condomínio: ");
+        double cond = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Valor do IPTU: ");
+        double iptu = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Quantidade de quartos: ");
+        int bedrooms = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Categoria (A-G): ");
+        String catInput = scanner.nextLine().toUpperCase();
+        if (catInput.isEmpty()) {
+            System.out.println("Erro: Categoria inválida.");
+            return;
+        }
+        char cat = catInput.charAt(0);
+        if (!Property.FCATS.containsKey(cat)) {
+            System.out.println("Erro: Categoria inválida.");
+            return;
+        }
+
+        Property property = selectedOwner.createPropertyListing(id, location, new ArrayList<>(), 
+            desc, type, daily, cond, iptu, cat, bedrooms);
+
+        properties.add(property);
+        System.out.println("Imóvel cadastrado com sucesso!");
     }
 
     private void listOwners() {
@@ -156,7 +170,7 @@ public class FlatMateUniApp {
             System.out.println("Nenhum proprietário cadastrado.");
             return;
         }
-        owners.forEach(o -> System.out.println("- " + o.getUser().getFullName() + " (CPF: " + o.getUser().getCpf() + ")"));
+        owners.forEach(o -> System.out.println("- " + o.getFullName() + " (CPF: " + o.getCpf() + ")"));
     }
 
     private void listProperties() {
@@ -164,6 +178,6 @@ public class FlatMateUniApp {
             System.out.println("Nenhum imóvel cadastrado.");
             return;
         }
-        properties.forEach(p -> System.out.println("- ID: " + p.getId() + " | Local: " + p.getDetailedLocation() + " | Proprietário: " + p.getOwner().getUser().getFullName()));
+        properties.forEach(p -> System.out.println("- Código: " + p.getId() + " | Endereço: " + p.getDetailedLocation() + " | Proprietário: " + p.getOwner().getFullName()));
     }
 }

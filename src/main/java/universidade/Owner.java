@@ -1,25 +1,23 @@
 package universidade;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Owner {
-    private User user;
+public class Owner extends User {
     private List<String> propertyDocuments;
 
-    public Owner(User user, List<String> propertyDocuments) {
-        this.user = user;
+    public Owner(String fullName, String cpf, LocalDate birthDate, String phoneNumber, String email,
+            String password, List<String> propertyDocuments) {
+        super(fullName, cpf, birthDate, phoneNumber, email, password);
         this.propertyDocuments = new ArrayList<>(propertyDocuments);
     }
 
-    public void sendMessage(Chat chat, String messageContent) {
-        user.sendMessage(chat, messageContent);
-    }
-
     public User getUser() {
-        return user;
+        return this;
     }
 
+    @Override
     public boolean validateIdentity() {
         return propertyDocuments != null && !propertyDocuments.isEmpty();
     }

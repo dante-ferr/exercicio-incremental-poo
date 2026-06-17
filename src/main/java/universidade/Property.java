@@ -58,9 +58,14 @@ public class Property {
     }
 
     public double calculateAverageRating() {
-        if (reviews.isEmpty())
+        if (reviews.isEmpty()) {
             return 0.0;
-        return reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
+        }
+        double sum = 0.0;
+        for (Review r : reviews) {
+            sum += r.getRating();
+        }
+        return sum / reviews.size();
     }
 
     public String getId() {

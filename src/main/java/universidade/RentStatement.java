@@ -23,14 +23,14 @@ public class RentStatement {
 
         double baseRent = rent.getDailyCharge() * rent.getDurationDays() * property.getFcat()
                 * property.getFqto();
-        lines.add(new StatementLine("Gross Rent", baseRent));
+        lines.add(new StatementLine("Aluguel Bruto", baseRent));
 
         if (category != 'A' && category != 'C') {
             lines.add(new StatementLine("IPTU", property.getIptuFee()));
         }
 
         if (category != 'A' && category != 'B') {
-            lines.add(new StatementLine("Condominium", property.getCondominiumFee()));
+            lines.add(new StatementLine("Condomínio", property.getCondominiumFee()));
         }
     }
 
@@ -40,7 +40,7 @@ public class RentStatement {
 
     public String getSummary() {
         return String.format(
-                "Total Contract Value: R$ %.2f\nMonthly Equivalent Cost: R$ %.2f\nMonthly Cost Per Resident: R$ %.2f",
+                "Valor Total do Contrato: R$ %.2f\nCusto Mensal Equivalente: R$ %.2f\nCusto Mensal por Morador: R$ %.2f",
                 rent.getTotalCost(), rent.getMonthlyEquivalentCost(),
                 rent.getMonthlyCostPerResident());
     }

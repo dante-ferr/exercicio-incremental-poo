@@ -1,12 +1,12 @@
 package universidade;
 
-public class Guarantor {
-    private User user;
+public class Guarantor extends User {
     private Student linkedStudent;
     private String proofOfResidence;
 
-    public Guarantor(User user, String proofOfResidence) {
-        this.user = user;
+    public Guarantor(String fullName, String cpf, java.time.LocalDate birthDate, String phoneNumber,
+            String email, String password, String proofOfResidence) {
+        super(fullName, cpf, birthDate, phoneNumber, email, password);
         this.proofOfResidence = proofOfResidence;
     }
 
@@ -15,11 +15,16 @@ public class Guarantor {
     }
 
     public void signContract(Contract contract) {
-        contract.registerSignature(this.user);
+        contract.registerSignature(this);
     }
 
     public User getUser() {
-        return user;
+        return this;
+    }
+
+    @Override
+    public boolean validateIdentity() {
+        return proofOfResidence != null && !proofOfResidence.isEmpty();
     }
 
     public Student getLinkedStudent() {

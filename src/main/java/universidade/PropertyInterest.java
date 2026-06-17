@@ -42,36 +42,43 @@ public class PropertyInterest {
     }
 
     public static List<PropertyInterest> findByStudentCpf(String cpf) {
-        return allInterests.stream()
-                .filter(i -> i.getStudent().getUser().getCpf().equals(cpf))
-                .collect(Collectors.toList());
+        List<PropertyInterest> result = new ArrayList<>();
+        for (PropertyInterest i : allInterests) {
+            if (i.getStudent().getCpf().equals(cpf)) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 
     public static List<PropertyInterest> findByProperty(String propertyIdOrAddress) {
-        return allInterests.stream()
-                .filter(i -> i.getProperty().getId().equals(propertyIdOrAddress) || 
-                             i.getProperty().getDetailedLocation().equals(propertyIdOrAddress))
-                .collect(Collectors.toList());
+        List<PropertyInterest> result = new ArrayList<>();
+        for (PropertyInterest i : allInterests) {
+            if (i.getProperty().getId().equals(propertyIdOrAddress) || 
+                i.getProperty().getDetailedLocation().equals(propertyIdOrAddress)) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 
     public String getDisplayInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("--- Dados do Interesse ---\n");
-        sb.append("Data: ").append(interestDate).append("\n");
-        sb.append("Status: ").append(status).append("\n");
+        sb.append("Interesse registrado em: ").append(interestDate).append("\n");
+        sb.append("Status do interesse: ").append(status).append("\n");
         
-        sb.append("\n--- Dados do Estudante ---\n");
-        sb.append("Nome: ").append(student.getUser().getFullName()).append("\n");
-        sb.append("CPF: ").append(student.getUser().getCpf()).append("\n");
-        sb.append("Telefone: ").append(student.getUser().getPhoneNumber()).append("\n");
-        sb.append("Idade: ").append(student.getAge()).append("\n");
-        sb.append("Universidade: ").append(student.getUniversity()).append("\n");
-        sb.append("Descrição: ").append(student.getPersonalDescription()).append("\n");
+        sb.append("\nInformações do Estudante:\n");
+        sb.append("- Nome: ").append(student.getFullName()).append("\n");
+        sb.append("- CPF: ").append(student.getCpf()).append("\n");
+        sb.append("- Telefone: ").append(student.getPhoneNumber()).append("\n");
+        sb.append("- Idade: ").append(student.getAge()).append("\n");
+        sb.append("- Universidade: ").append(student.getUniversity()).append("\n");
+        sb.append("- Descrição pessoal: ").append(student.getPersonalDescription()).append("\n");
 
-        sb.append("\n--- Dados do Imóvel ---\n");
-        sb.append("ID: ").append(property.getId()).append("\n");
-        sb.append("Endereço: ").append(property.getDetailedLocation()).append("\n");
-        sb.append("Tipo: ").append(property.getAccommodationType()).append("\n");
+        sb.append("\nDetalhes do Imóvel:\n");
+        sb.append("- Código: ").append(property.getId()).append("\n");
+        sb.append("- Endereço: ").append(property.getDetailedLocation()).append("\n");
+        sb.append("- Tipo: ").append(property.getAccommodationType()).append("\n");
         
         return sb.toString();
     }

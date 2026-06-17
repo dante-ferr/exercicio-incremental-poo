@@ -2,13 +2,15 @@ package universidade;
 
 import java.time.LocalDate;
 
-public class User {
+public abstract class User {
     protected String fullName;
     protected String cpf;
     protected LocalDate birthDate;
     protected String phoneNumber;
     protected String email;
     protected String password;
+
+    public abstract boolean validateIdentity();
 
     public User(String fullName, String cpf, LocalDate birthDate, String phoneNumber, String email,
             String password) {
